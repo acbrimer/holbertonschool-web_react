@@ -9,7 +9,9 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <h1>School dashboard</h1>
       </header>
-      <main className="App-body">Login to access the full dashboard</main>
+      <main className="App-body">
+        <p>Login to access the full dashboard</p>
+      </main>
       <footer className="App-footer">
         <i>Copyright 2020 - holberton school</i>
       </footer>
