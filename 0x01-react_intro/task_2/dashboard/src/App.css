@@ -1,6 +1,7 @@
 body {
   overflow: hidden;
   --holberton-red: #e0003c;
+  --default-blue: rgb(0, 0, 255);
   font-family: Arial, Helvetica, sans-serif;
 }
 
