@@ -1,5 +1,6 @@
 import { getFullYear, getLatestNotification, getFooterCopy } from './utils';
 import { assert } from 'chai';
+import enzyme from 'enzyme';
 
 describe('Util functions tests', () => {
   it('Test getFullYear() - current year 2022', () => {

@@ -30,6 +30,7 @@ const Notifications = () => {
           getLatestNotification(),
         ].map((str, ix) => (
           <li
+            key={`notification-${ix}`}
             dangerouslySetInnerHTML={{ __html: str }}
             className={ix === 0 ? 'priority-default' : 'priority-urgent'}
           ></li>
