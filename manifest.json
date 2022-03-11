@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Adam's React App",
+  "name": "Adam's React App for Holberton 0x01-react-intro",
   "icons": [
     {
       "src": "favicon.ico",
