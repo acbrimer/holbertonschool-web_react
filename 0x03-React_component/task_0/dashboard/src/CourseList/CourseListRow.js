@@ -13,7 +13,7 @@ const CourseListRow = (props) => {
             <th>{textSecondCell}</th>
           </>
         ) : (
-          <th colspan={2}>{textFirstCell}</th>
+          <th colSpan={2}>{textFirstCell}</th>
         )
       ) : (
         <>
@@ -28,7 +28,7 @@ const CourseListRow = (props) => {
 CourseListRow.propTypes = {
   isHeader: PropTypes.bool,
   textFirstCell: PropTypes.string.isRequired,
-  textSecondCell: PropTypes.string,
+  textSecondCell: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 CourseListRow.defaultProps = {

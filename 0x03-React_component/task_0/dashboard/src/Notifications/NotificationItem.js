@@ -5,7 +5,7 @@ function NotificationItem(props) {
   return html ? (
     <li
       data-notification-type={type}
-      dangerouslySetInnerHTML={{ __html: html }}
+      dangerouslySetInnerHTML={html}
       className={type === 'urgent' ? 'priority-urgent' : 'priority-default'}
     ></li>
   ) : (

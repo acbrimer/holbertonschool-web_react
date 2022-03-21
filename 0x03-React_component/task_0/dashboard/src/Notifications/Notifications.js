@@ -4,14 +4,15 @@ import clsx from 'clsx';
 import './Notifications.css';
 import { getLatestNotification } from '../utils';
 import NotificationItem from './NotificationItem';
+import NotificationItemShape from './NotificationItemShape';
 
 const Notifications = (props) => {
-  const { displayDrawer } = props;
+  const { displayDrawer, listNotifications } = props;
   const handleCloseClick = () => {
     console.log('Close button has been clicked');
   };
   return (
-    <>
+    <div className="notificationsWrapper">
       <div className="menuItem">Your notifications</div>
       <div
         className={clsx('Notifications', {
@@ -34,33 +35,30 @@ const Notifications = (props) => {
         </button>
         <p>Here is the list of notifications</p>
         <ul>
-          <NotificationItem
-            key="notification_item-0"
-            value="New course available"
-            type="default"
-          />
-          <NotificationItem
-            key="notification_item-1"
-            value="New resume available"
-            type="default"
-          />
-          <NotificationItem
-            key="notification_item-2"
-            type="urgent"
-            html={getLatestNotification()}
-          />
+          {listNotifications.length === 0 ? (
+            <li>No new notification for now</li>
+          ) : (
+            listNotifications.map((notification) => (
+              <NotificationItem
+                key={`notification-${notification.id}`}
+                {...notification}
+              />
+            ))
+          )}
         </ul>
       </div>
-    </>
+    </div>
   );
 };
 
 Notifications.propTypes = {
   displayDrawer: PropTypes.bool,
+  listNotifications: PropTypes.arrayOf(NotificationItemShape),
 };
 
 Notifications.defaultProps = {
   displayDrawer: true,
+  listNotifications: [],
 };
 
 export default Notifications;

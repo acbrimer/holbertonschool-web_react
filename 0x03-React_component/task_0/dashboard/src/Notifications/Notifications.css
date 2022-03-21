@@ -1,16 +1,27 @@
+div.notificationsWrapper {
+  margin-right: 32px;
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  align-self: flex-end;
+  max-width: 40%;
+}
+
+div.menuItem {
+  justify-content: flex-end;
+  width: 100%;
+  display: inline-flex;
+}
+
 div.Notifications {
+  position: relative;
   padding: 12px;
   border: 1px dashed var(--holberton-red);
-  max-width: 40%;
-  align-self: flex-end;
+  width: 100%;
 }
 
 .hidden {
   display: none;
-}
-
-div.menuItem {
-  align-self: flex-end;
 }
 
 li.priority-urgent {
