@@ -2,13 +2,10 @@ import React from 'react';
 
 function NotificationItem(props) {
   const { id, type, html, value, markAsRead } = props;
-  const handleClick = () => {
-    markAsRead(id);
-  };
 
   return html ? (
     <li
-      onClick={handleClick}
+      onClick={() => markAsRead(id)}
       data-notification-type={type}
       dangerouslySetInnerHTML={html}
       className={type === 'urgent' ? 'priority-urgent' : 'priority-default'}
