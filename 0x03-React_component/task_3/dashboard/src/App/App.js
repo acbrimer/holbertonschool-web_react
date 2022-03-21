@@ -7,6 +7,7 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Login from '../Login/Login';
 import CourseList from '../CourseList/CourseList';
+import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
 
 const listCourses = [
   { id: 1, name: 'ES6', credit: 60 },
@@ -52,10 +53,24 @@ class App extends Component {
         <Header />
         <main className="App-body">
           {this.props.isLoggedIn ? (
-            <CourseList listCourses={listCourses} />
+            <BodySectionWithMarginBottom title="Course list">
+              <CourseList listCourses={listCourses} />
+            </BodySectionWithMarginBottom>
           ) : (
-            <Login />
+            <BodySectionWithMarginBottom title="Log in to continue">
+              <Login />
+            </BodySectionWithMarginBottom>
           )}
+          <BodySectionWithMarginBottom title="News from the School">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu
+              erat eget urna mattis volutpat. In eu malesuada purus, eget mollis
+              lectus. Donec vitae elit et ipsum lobortis porttitor. Proin felis
+              arcu, sagittis sit amet massa ac, consectetur hendrerit leo. Sed
+              tempor eros ac ligula tempor convallis. Ut nec luctus turpis. Sed
+              hendrerit imperdiet nulla.
+            </p>
+          </BodySectionWithMarginBottom>
         </main>
         <Footer />
       </>
