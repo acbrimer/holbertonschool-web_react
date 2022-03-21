@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 import React from 'react';
 import { assert, expect } from 'chai';
 import { shallow } from 'enzyme';
@@ -36,5 +39,19 @@ describe('<App />', () => {
     const app = shallow(<App isLoggedIn />);
     expect(app.exists(CourseList)).to.equal(true);
     expect(app.exists(Login)).to.equal(false);
+  });
+  it('App logs out when control+h keys pressed', () => {
+    let isLoggedOut = false;
+    const logOut = () => {
+      isLoggedOut = true;
+    };
+    const map = {};
+    window.addEventListener = jest.fn((event, cb) => {
+      map[event] = cb;
+    });
+    window.alert = () => {};
+    const app = shallow(<App logOut={logOut} />);
+    map.keydown({ key: 'h', ctrlKey: true });
+    assert.isTrue(isLoggedOut);
   });
 });

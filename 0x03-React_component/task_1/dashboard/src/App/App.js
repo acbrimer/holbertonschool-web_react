@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './App.css';
 import { getLatestNotification } from '../utils';
@@ -20,14 +20,35 @@ const listNotifications = [
   { id: 3, type: 'urgent', html: { __html: getLatestNotification() } },
 ];
 
-class App extends React.Component {
+class App extends Component {
   constructor(props) {
     super(props);
+    this.handleKeydown = this.handleKeydown.bind(this);
   }
+
+  handleKeydown(event) {
+    const { key, ctrlKey } = event;
+    if (ctrlKey && key === 'h') {
+      window.alert('Logging you out');
+      this.props.logOut();
+    }
+  }
+
+  componentDidMount() {
+    window.addEventListener('keydown', this.handleKeydown);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.handleKeydown);
+  }
+
   render() {
     return (
       <>
-        <Notifications listNotifications={listNotifications} />
+        <Notifications
+          listNotifications={listNotifications}
+          displayDrawer={this.props.displayDrawer}
+        />
         <Header />
         <main className="App-body">
           {this.props.isLoggedIn ? (
@@ -44,10 +65,14 @@ class App extends React.Component {
 
 App.propTypes = {
   isLoggedIn: PropTypes.bool,
+  displayDrawer: PropTypes.bool,
+  logOut: PropTypes.func,
 };
 
 App.defaultProps = {
   isLoggedIn: false,
+  displayDrawer: false,
+  logOut: () => {},
 };
 
 export default App;
