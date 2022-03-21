@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './App.css';
 import { getLatestNotification } from '../utils';
@@ -20,7 +20,7 @@ const listNotifications = [
   { id: 3, type: 'urgent', html: { __html: getLatestNotification() } },
 ];
 
-class App extends React.Component {
+class App extends Component {
   render() {
     return (
       <>
