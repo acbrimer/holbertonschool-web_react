@@ -6,10 +6,11 @@ const CourseList = () => {
   return (
     <table key="course-list" id="course-list" className="tbl-CourseList">
       <thead>
+        <CourseListRow isHeader textFirstCell="Available courses" />
         <CourseListRow
           isHeader
-          textFirstCell="Available courses"
-          textSecondCell="Course name"
+          textFirstCell="Course name"
+          textSecondCell="Credit"
         />
       </thead>
       <tbody>

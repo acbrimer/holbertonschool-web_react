@@ -11,7 +11,7 @@ const Notifications = (props) => {
     console.log('Close button has been clicked');
   };
   return (
-    <>
+    <div className="notificationsWrapper">
       <div className="menuItem">Your notifications</div>
       <div
         className={clsx('Notifications', {
@@ -51,7 +51,7 @@ const Notifications = (props) => {
           />
         </ul>
       </div>
-    </>
+    </div>
   );
 };
 

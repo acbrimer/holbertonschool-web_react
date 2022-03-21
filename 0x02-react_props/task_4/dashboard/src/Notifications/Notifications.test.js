@@ -25,4 +25,9 @@ describe('<Notifications />', () => {
     const notifications = shallow(<Notifications />);
     assert.equal(notifications.find(NotificationItem).length, 3);
   });
+
+  it('Notifications hidden when displayDrawer = false', () => {
+    const notifications = shallow(<Notifications displayDrawer={false} />);
+    assert.equal(notifications.find('div.hidden').length, 1);
+  });
 });

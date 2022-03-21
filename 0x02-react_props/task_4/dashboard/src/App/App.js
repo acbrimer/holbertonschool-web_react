@@ -26,7 +26,7 @@ App.propTypes = {
 };
 
 App.defaultProps = {
-  isLoggedIn: true,
+  isLoggedIn: false,
 };
 
 export default App;
