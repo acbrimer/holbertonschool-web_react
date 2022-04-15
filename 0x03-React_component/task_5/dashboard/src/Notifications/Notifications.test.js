@@ -64,4 +64,33 @@ describe('<Notifications />', () => {
     expect(console.log).toBeCalledTimes(1);
   });
 
+  it('Notifications does not rerender on same props', () => {
+    const renderSpy = jest.spyOn(Notifications.prototype, 'render');
+
+    const notifications = shallow(
+      <Notifications
+        displayDrawer={true}
+        listNotifications={listNotifications}
+      />
+    );
+    notifications.setProps({ listNotifications: listNotifications });
+    expect(renderSpy).toBeCalledTimes(1);
+  });
+
+  it('Notifications rerenders with new listNotifications', () => {
+    const renderSpy = jest.spyOn(Notifications.prototype, 'render');
+    const notifications = shallow(
+      <Notifications
+        displayDrawer={true}
+        listNotifications={listNotifications}
+      />
+    );
+    notifications.setProps({
+      listNotifications: [
+        ...listNotifications,
+        { id: 4, type: 'default', value: 'Another notification' },
+      ],
+    });
+    expect(renderSpy).toBeCalledTimes(3);
+  });
 });
