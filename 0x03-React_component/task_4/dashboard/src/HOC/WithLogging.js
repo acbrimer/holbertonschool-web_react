@@ -1,17 +1,11 @@
 import React, { useEffect } from 'react';
 
-export const WithLogging = (WC) => {
+const WithLogging = (WC) => {
   const Component = (props) => {
     useEffect(() => {
-      console.log(
-        `Component ${WC.name || 'Component'} is mounted on componentDidMount()`
-      );
+      console.log(`Component ${WC.name || 'Component'} is mounted`);
       return () => {
-        console.log(
-          `Component ${
-            WC.name || 'Component'
-          } is going to unmount on componentWillUnmount()`
-        );
+        console.log(`Component ${WC.name || 'Component'} is going to unmount`);
       };
     }, []);
     return <WC {...props} />;
@@ -19,3 +13,5 @@ export const WithLogging = (WC) => {
   Component.displayName = `WithLogging(${WC.name || 'Component'})`;
   return Component;
 };
+
+export default WithLogging;

@@ -8,7 +8,7 @@ import Footer from '../Footer/Footer';
 import Login from '../Login/Login';
 import CourseList from '../CourseList/CourseList';
 import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
-import { WithLogging } from '../HOC/WithLogging';
+import WithLogging from '../HOC/WithLogging';
 
 const listCourses = [
   { id: 1, name: 'ES6', credit: 60 },
@@ -91,4 +91,4 @@ App.defaultProps = {
   logOut: () => {},
 };
 
-export default WithLogging(App);
+export default App;
