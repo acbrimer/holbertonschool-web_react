@@ -1,6 +1,6 @@
 import React from 'react';
 import { assert } from 'chai';
-import { shallow } from 'enzyme';
+import { shallow } from '../../config/setupTests';
 import Notifications from './Notifications';
 import NotificationItem from './NotificationItem';
 import { getLatestNotification } from '../utils';
