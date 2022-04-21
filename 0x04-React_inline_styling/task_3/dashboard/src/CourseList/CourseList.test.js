@@ -1,6 +1,7 @@
 import React from 'react';
 import { assert } from 'chai';
-import { shallow } from 'enzyme';
+import { StyleSheetTestUtils } from 'aphrodite';
+import { shallow } from '../../config/setupTests';
 import CourseList from './CourseList';
 import CourseListRow from './CourseListRow';
 
@@ -11,6 +12,12 @@ const listCourses = [
 ];
 
 describe('<CourseList />', () => {
+  beforeEach(() => {
+    StyleSheetTestUtils.suppressStyleInjection();
+  });
+  afterEach(() => {
+    StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+  });
   it('CourseList renders without crashing', () => {
     shallow(<CourseList />);
   });

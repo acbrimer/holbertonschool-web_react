@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react';
-import { mount } from 'enzyme';
+import { mount } from '../../config/setupTests';
 import WithLogging from './WithLogging';
 import Login from '../Login/Login';
 

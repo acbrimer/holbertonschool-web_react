@@ -1,9 +1,18 @@
 import React from 'react';
 import { assert } from 'chai';
 import { shallow } from '../../config/setupTests';
+import { StyleSheetTestUtils } from 'aphrodite';
+
 import CourseListRow from './CourseListRow';
 
 describe('<CourseListRow />', () => {
+  beforeEach(() => {
+    StyleSheetTestUtils.suppressStyleInjection();
+  });
+  afterEach(() => {
+    StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+  });
+
   it('Renders thead w/ colspan = 2 if isHeader & no textSecondCell', () => {
     const row = shallow(
       <CourseListRow isHeader textFirstCell="First Header" />
