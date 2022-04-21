@@ -1,3 +1,3 @@
 import { fromJS } from 'immutable';
 
-export default (object) => fromJs(object);
+export default (object) => fromJS(object);
