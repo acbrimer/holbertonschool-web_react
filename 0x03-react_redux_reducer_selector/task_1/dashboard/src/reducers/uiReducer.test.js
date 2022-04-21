@@ -5,7 +5,10 @@ import uiReducer, { initialState } from './uiReducer';
 
 describe('uiReducer', () => {
   it('State does not change with no action type dispatched', () => {
-    assert.equal(uiReducer({ type: null }, initialState).toJS(), initialState);
+    assert.deepEqual(
+      uiReducer({ type: null }, initialState).toJS(),
+      initialState.toJS()
+    );
   });
   it('State does not change with SELECT_COURSE action', () => {
     assert.deepEqual(
