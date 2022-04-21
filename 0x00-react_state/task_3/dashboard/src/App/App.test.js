@@ -70,4 +70,14 @@ describe('<App />', () => {
     map.keydown({ key: 'h', ctrlKey: true });
     assert.isFalse(app.state().user.isLoggedIn);
   });
+  it('markNotificationAsRead works as intended', () => {
+    const app = shallow(<App />);
+    const initialNotifications = app.state().listNotifications.length;
+
+    app.instance().markNotificationAsRead(1);
+
+    expect(app.state().listNotifications.length).to.equal(
+      initialNotifications - 1
+    );
+  });
 });

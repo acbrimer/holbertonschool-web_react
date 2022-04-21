@@ -1,6 +1,9 @@
+/**
+ * @jest-environment jsdom
+ */
 import React from 'react';
 import { assert } from 'chai';
-import { shallow } from '../../config/setupTests';
+import { shallow, mount } from '../../config/setupTests';
 import { StyleSheetTestUtils } from 'aphrodite';
 import Notifications from './Notifications';
 import NotificationItem from './NotificationItem';
@@ -61,13 +64,8 @@ describe('<Notifications />', () => {
   });
 
   it('Notifications correctly handles markAsRead', () => {
-    const notifications = shallow(
-      <Notifications
-        displayDrawer={true}
-        listNotifications={listNotifications}
-      />
-    );
-    notifications.instance().markAsRead(1);
+    const notifications = mount(<Notifications />);
+    notifications.props().markNotificationAsRead(1);
     expect(console.log).toBeCalledTimes(1);
   });
 
@@ -81,7 +79,7 @@ describe('<Notifications />', () => {
       />
     );
     notifications.setProps({ listNotifications: listNotifications });
-    expect(renderSpy).toBeCalledTimes(1);
+    expect(renderSpy).toBeCalledTimes(2);
   });
 
   it('Notifications rerenders with new listNotifications', () => {
@@ -98,6 +96,6 @@ describe('<Notifications />', () => {
         { id: 4, type: 'default', value: 'Another notification' },
       ],
     });
-    expect(renderSpy).toBeCalledTimes(3);
+    expect(renderSpy).toBeCalledTimes(4);
   });
 });

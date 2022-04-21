@@ -62,6 +62,7 @@ class App extends Component {
     this.state = {
       displayDrawer: props.displayDrawer,
       user: user,
+      listNotifications: listNotifications,
     };
 
     this.handleKeydown = this.handleKeydown.bind(this);
@@ -69,6 +70,16 @@ class App extends Component {
     this.handleHideDrawer = this.handleHideDrawer.bind(this);
     this.logIn = this.logIn.bind(this);
     this.logOut = this.logOut.bind(this);
+    this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
+  }
+
+  markNotificationAsRead(id) {
+    this.setState({
+      ...this.state,
+      listNotifications: this.state.listNotifications.filter(
+        (n) => n.id !== id
+      ),
+    });
   }
 
   logIn(email, password) {
@@ -112,10 +123,16 @@ class App extends Component {
   render() {
     return (
       <AppContext.Provider
-        value={{ user: this.state.user, logOut: this.logOut }}
+        value={{
+          user: this.state.user,
+          listNotifications: this.state.listNotifications,
+          logOut: this.logOut,
+          markNotificationAsRead: this.markNotificationAsRead,
+        }}
       >
         <Notifications
-          listNotifications={listNotifications}
+          markNotificationAsRead={this.markNotificationAsRead}
+          listNotifications={this.state.listNotifications}
           displayDrawer={this.state.displayDrawer}
           handleDisplayDrawer={this.handleDisplayDrawer}
           handleHideDrawer={this.handleHideDrawer}

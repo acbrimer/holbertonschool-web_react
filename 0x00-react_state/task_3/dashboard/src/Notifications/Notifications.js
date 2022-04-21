@@ -68,19 +68,7 @@ class Notifications extends Component {
   constructor(props) {
     super(props);
 
-    this.markAsRead = this.markAsRead.bind(this);
-  }
-
-  markAsRead(id) {
-    console.log(`Notification ${id} has been marked as read`);
-  }
-
-  shouldComponentUpdate(nextProps) {
-    return (
-      (this.props.listNotifications || []).length <
-        (nextProps.listNotifications || []).length ||
-      this.props.displayDrawer !== nextProps.displayDrawer
-    );
+    this.markAsRead = this.props.markNotificationAsRead;
   }
 
   render() {
@@ -140,6 +128,7 @@ class Notifications extends Component {
 }
 
 Notifications.propTypes = {
+  markNotificationAsRead: PropTypes.func,
   displayDrawer: PropTypes.bool,
   listNotifications: PropTypes.arrayOf(NotificationItemShape),
   handleDisplayDrawer: PropTypes.func,
@@ -147,6 +136,7 @@ Notifications.propTypes = {
 };
 
 Notifications.defaultProps = {
+  markNotificationAsRead: (id) => console.log('Notification read', id),
   displayDrawer: true,
   listNotifications: [],
   handleDisplayDrawer: () => {},
