@@ -1,6 +1,8 @@
 import { Seq } from 'immutable';
 
-const titleCase = (str) => [str.charAt(0).toUpperCase(), str.slice(1)].join('');
+function titleCase(str) {
+  return [str.charAt(0).toUpperCase(), str.slice(1)].join('');
+}
 
 export default function printBestStudents(object) {
   const filteredObject = Object.fromEntries(
