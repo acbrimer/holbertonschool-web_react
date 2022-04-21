@@ -1,9 +1,16 @@
 import React from 'react';
 import { assert } from 'chai';
 import { shallow } from '../../config/setupTests';
+import { StyleSheetTestUtils } from 'aphrodite';
 import Header from './Header';
 
 describe('<Header />', () => {
+  beforeEach(() => {
+    StyleSheetTestUtils.suppressStyleInjection();
+  });
+  afterEach(() => {
+    StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+  });
   it('Header component renders without crashing', () => {
     shallow(<Header />);
   });

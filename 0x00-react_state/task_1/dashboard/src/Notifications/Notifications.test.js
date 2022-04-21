@@ -1,6 +1,7 @@
 import React from 'react';
 import { assert } from 'chai';
 import { shallow } from '../../config/setupTests';
+import { StyleSheetTestUtils } from 'aphrodite';
 import Notifications from './Notifications';
 import NotificationItem from './NotificationItem';
 import { getLatestNotification } from '../utils';
@@ -12,10 +13,16 @@ const listNotifications = [
 ];
 
 const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
+
 describe('<Notifications />', () => {
   beforeEach(() => {
     consoleSpy.mockClear();
+    StyleSheetTestUtils.suppressStyleInjection();
   });
+  afterEach(() => {
+    StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+  });
+
   it('Notifications renders without crashing', () => {
     shallow(<Notifications />);
   });
@@ -45,7 +52,7 @@ describe('<Notifications />', () => {
 
   it('Notifications hidden when displayDrawer = false', () => {
     const notifications = shallow(<Notifications displayDrawer={false} />);
-    assert.equal(notifications.find('div.hidden').length, 1);
+    assert.notEqual(notifications.props().displayDrawer, true);
   });
 
   it('Notifications displays correct empty message', () => {

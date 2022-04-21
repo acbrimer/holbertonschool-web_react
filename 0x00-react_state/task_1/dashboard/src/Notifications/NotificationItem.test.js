@@ -1,8 +1,15 @@
 import React from 'react';
 import { shallow } from '../../config/setupTests';
 import NotificationItem from './NotificationItem';
+import { StyleSheetTestUtils } from 'aphrodite';
 
 describe('<NotificationItem />', () => {
+  beforeEach(() => {
+    StyleSheetTestUtils.suppressStyleInjection();
+  });
+  afterEach(() => {
+    StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+  });
   it('NotificationItem renders without crashing', () => {
     shallow(<NotificationItem />);
   });

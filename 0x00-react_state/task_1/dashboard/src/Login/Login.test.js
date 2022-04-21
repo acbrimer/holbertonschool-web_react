@@ -1,9 +1,17 @@
 import React from 'react';
 import { assert } from 'chai';
+import { StyleSheetTestUtils } from 'aphrodite';
 import { shallow } from '../../config/setupTests';
 import Login from './Login';
 
 describe('<Login />', () => {
+  beforeEach(() => {
+    StyleSheetTestUtils.suppressStyleInjection();
+  });
+  afterEach(() => {
+    StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+  });
+
   it('Login component renders without crashing', () => {
     shallow(<Login />);
   });
