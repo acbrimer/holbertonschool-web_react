@@ -3,7 +3,8 @@
  */
 import React from 'react';
 import { assert, expect } from 'chai';
-import { shallow } from 'enzyme';
+import { shallow } from '../../config/setupTests';
+import { StyleSheetTestUtils } from 'aphrodite';
 import App from './App';
 import Notifications from '../Notifications/Notifications';
 import Header from '../Header/Header';
@@ -12,6 +13,12 @@ import Login from '../Login/Login';
 import CourseList from '../CourseList/CourseList';
 
 describe('<App />', () => {
+  beforeEach(() => {
+    StyleSheetTestUtils.suppressStyleInjection();
+  });
+  afterEach(() => {
+    StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+  });
   it('App renders without crashing', () => {
     shallow(<App />);
   });
