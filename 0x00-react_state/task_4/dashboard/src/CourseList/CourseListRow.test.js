@@ -27,7 +27,7 @@ describe('<CourseListRow />', () => {
         textSecondCell="Second Header"
       />
     );
-    assert.equal(row.find('th').length, 2);
+    assert.equal(row.find('th').length, 3);
   });
   it('Renders tr w/ 2 td elements if not header', () => {
     const row = shallow(
