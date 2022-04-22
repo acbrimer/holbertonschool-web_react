@@ -1,0 +1,6 @@
+.App-footer {
+  padding: 12px;
+  flex-grow: 0;
+  text-align: center;
+  border-top: 3px solid var(--holberton-red);
+}
