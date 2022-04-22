@@ -9,7 +9,7 @@ import notificationReducer, {
   defaultData,
 } from './notificationReducer';
 
-describe('courseReducer', () => {
+describe('notificationReducer', () => {
   it('Default state returns an empty array', () => {
     const state = notificationReducer({ type: null }, initialState);
     assert.deepEqual(state, initialState);
@@ -20,7 +20,7 @@ describe('courseReducer', () => {
       initialState
     );
     assert.deepEqual(
-      state.data,
+      state.notifications,
       defaultData.map((d) => ({ ...d, isRead: false }))
     );
   });
@@ -30,7 +30,7 @@ describe('courseReducer', () => {
       initialState
     );
     state = notificationReducer(markAsRead(1), state);
-    assert.isTrue(state.data[1].isRead);
+    assert.isTrue(state.notifications[1].isRead);
   });
   it('SET_TYPE_FILTER updates state with correct NotificationTypeFilters', () => {
     let state = notificationReducer(
