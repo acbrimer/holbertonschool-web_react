@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import { assert, expect } from 'chai';
-import { shallow } from '../../config/setupTests';
+import { shallow, mount } from '../../config/setupTests';
 import { StyleSheetTestUtils } from 'aphrodite';
 import { Map } from 'immutable';
 import { Provider } from 'react-redux';
@@ -24,6 +24,10 @@ const AppWithStore = () => (
   </Provider>
 );
 
+const AppStoreWrapper = (props) => (
+  <Provider store={props.store}>{props.children}</Provider>
+);
+
 describe('<App />', () => {
   beforeEach(() => {
     StyleSheetTestUtils.suppressStyleInjection();
@@ -35,40 +39,45 @@ describe('<App />', () => {
     shallow(<AppWithStore />);
   });
   it('App contains Notifications component', () => {
-    const appWithStore = shallow(<AppWithStore />);
-    const app = appWithStore.find(App)[0];
+    const app = mount(<AppWithStore />);
     assert.equal(app.find(Notifications).length, 1);
   });
   it('App contains Header component', () => {
-    const app = shallow(<AppWithStore />);
+    const app = mount(<AppWithStore />);
     assert.equal(app.find(Header).length, 1);
   });
   it('App contains Login component', () => {
-    const app = shallow(<AppWithStore />);
+    const app = mount(<AppWithStore />);
     assert.equal(app.find(Login).length, 1);
   });
   it('App contains Footer component', () => {
-    const app = shallow(<AppWithStore />);
+    const app = mount(<AppWithStore />);
     assert.equal(app.find(Footer).length, 1);
   });
   it('App does not render CourseList by default', () => {
-    const app = shallow(<AppWithStore />);
+    const app = mount(<AppWithStore />);
     expect(app.exists(CourseList)).to.equal(false);
   });
   it('App renders CourseList when isLoggedIn === true', () => {
-    const app = shallow(<AppWithStore />);
-    app.find(App).logIn('email@email.com', 'password');
-    expect(app.exists(CourseList)).to.equal(true);
-    expect(app.exists(Login)).to.equal(false);
+    const app = shallow(<App />, {
+      wrappingComponent: AppStoreWrapper,
+      wrappingComponentProps: { store: store },
+    });
+    app.instance().logIn('email@email.com', 'password');
+    assert.equal(app.find(CourseList).length, 1);
+    assert.equal(app.find(Login).length, 0);
   });
   it('App stores correct user email when logged in', () => {
-    const app = shallow(<AppWithStore />);
-    app.find(App).instance().logIn('email@email.com', 'password');
+    const app = mount(<App />, {
+      wrappingComponent: AppStoreWrapper,
+      wrappingComponentProps: { store: store },
+    });
+    app.instance().logIn('email@email.com', 'password');
     expect(app.state().user.email).to.equal('email@email.com');
   });
   it('App updates user when logged out called', () => {
-    const app = shallow(<AppWithStore />);
-    app.instance().logIn('email@email.com', 'password');
+    const app = shallow(<App />, { wrappingComponent: AppStoreWrapper });
+    app.logIn('email@email.com', 'password');
     app.instance().logOut();
     expect(app.state().user.isLoggedIn).to.equal(false);
     expect(app.state().user.email).to.equal('');
@@ -79,12 +88,12 @@ describe('<App />', () => {
       map[event] = cb;
     });
     window.alert = () => {};
-    const app = shallow(<AppWithStore />);
+    const app = shallow(<App />, { wrappingComponent: AppStoreWrapper });
     map.keydown({ key: 'h', ctrlKey: true });
     assert.isFalse(app.state().user.isLoggedIn);
   });
   it('markNotificationAsRead works as intended', () => {
-    const app = shallow(<AppWithStore />);
+    const app = shallow(<App />, { wrappingComponent: AppStoreWrapper });
     const initialNotifications = app.state().listNotifications.length;
 
     app.instance().markNotificationAsRead(1);
@@ -103,7 +112,6 @@ describe('App.mapStateToProps', () => {
       }),
     };
     const mappedState = mapStateToProps(state);
-    console.log('mappedState', mappedState);
-    assert.isTrue(mappedState.ui.toJS().isLoggedIn);
+    assert.isTrue(mappedState.isLoggedIn);
   });
 });
