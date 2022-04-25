@@ -15,7 +15,30 @@ export const notification = new schema.Entity('notifications', {
   context: message,
 });
 
-const data = normalize(notifications_json, [notification]);
+export const notificationsNormalizer = (data) => {
+  const n = normalize(data, [notification]);
+  if (n && n.notifications && n.messages && n.users) {
+    return {
+      notifications: {
+        data: Object.fromEntries(
+          n.result.map((id) => [
+            id,
+            { ...n.entities.notifications[id], isRead: false },
+          ])
+        ),
+        ids: n.result,
+      },
+      messages: {
+        data: n.entities.messages,
+        ids: Object.keys(n.entities.messages),
+      },
+      users: { data: n.entities.users, ids: Object.keys(n.entities.users) },
+    };
+  }
+  return {};
+};
+
+const data = notifications_json;
 
 export function getAllNotificationsByUser(userId) {
   return filter(

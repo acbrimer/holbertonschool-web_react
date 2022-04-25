@@ -3,6 +3,8 @@ import {
   UNSELECT_COURSE,
   FETCH_COURSE_SUCCESS,
 } from '../actions/courseActionTypes';
+import { Map } from 'immutable';
+import { courseNormalizer } from '../schema/courses';
 
 export const defaultData = [
   {
@@ -22,19 +24,33 @@ export const defaultData = [
   },
 ];
 
-export const initialState = [];
+export const initialState = Map({
+  courses: { ids: [], data: {}, filter: null },
+});
 
 export default (action, state = initialState) => {
   switch (action.type) {
     case FETCH_COURSE_SUCCESS:
-      return action.data.map((r) => ({ ...r, isSelected: false }));
+      return state.mergeDeep(courseNormalizer(action.data));
     case SELECT_COURSE:
-      return state.map((r, ix) =>
-        ix === action.index ? { ...r, isSelected: true } : r
+      return state.setIn(
+        [
+          'courses',
+          'data',
+          state.getIn(['courses', 'ids', action.index]),
+          'isSelected',
+        ],
+        true
       );
     case UNSELECT_COURSE:
-      return state.map((r, ix) =>
-        ix === action.index ? { ...r, isSelected: false } : r
+      return state.setIn(
+        [
+          'courses',
+          'data',
+          state.getIn(['courses', 'ids', action.index]),
+          'isSelected',
+        ],
+        false
       );
     default:
       return state;
