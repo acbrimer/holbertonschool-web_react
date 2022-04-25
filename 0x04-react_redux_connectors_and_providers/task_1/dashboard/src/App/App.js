@@ -10,6 +10,10 @@ import Login from '../Login/Login';
 import CourseList from '../CourseList/CourseList';
 import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
 import AppContext, { user } from './AppContext';
+import {
+  displayNotificationDrawer,
+  hideNotificationDrawer,
+} from '../actions/uiActionCreators';
 
 const GLOBALS = '__GLOBAL_STYLES__';
 
@@ -61,14 +65,11 @@ class App extends Component {
     super(props);
     extended.css(globalStyles[GLOBALS]);
     this.state = {
-      displayDrawer: props.displayDrawer,
       user: { ...user, isLoggedIn: props.isLoggedIn },
       listNotifications: listNotifications,
     };
 
     this.handleKeydown = this.handleKeydown.bind(this);
-    this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
-    this.handleHideDrawer = this.handleHideDrawer.bind(this);
     this.logIn = this.logIn.bind(this);
     this.logOut = this.logOut.bind(this);
     this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
@@ -105,14 +106,6 @@ class App extends Component {
     }
   }
 
-  handleDisplayDrawer() {
-    this.setState({ ...this.state, displayDrawer: true });
-  }
-
-  handleHideDrawer() {
-    this.setState({ ...this.state, displayDrawer: false });
-  }
-
   componentDidMount() {
     window.addEventListener('keydown', this.handleKeydown);
   }
@@ -135,8 +128,8 @@ class App extends Component {
           markNotificationAsRead={this.markNotificationAsRead}
           listNotifications={this.state.listNotifications}
           displayDrawer={this.props.displayDrawer}
-          handleDisplayDrawer={this.handleDisplayDrawer}
-          handleHideDrawer={this.handleHideDrawer}
+          handleDisplayDrawer={this.props.handleDisplayDrawer}
+          handleHideDrawer={this.props.handleHideDrawer}
         />
         <Header />
         <main className={css(styles.appBody)}>
@@ -169,10 +162,14 @@ class App extends Component {
 App.propTypes = {
   displayDrawer: PropTypes.bool,
   isLoggedIn: PropTypes.bool,
+  handleDisplayDrawer: PropTypes.func,
+  handleHideDrawer: PropTypes.func,
 };
 
 App.defaultProps = {
   displayDrawer: false,
+  handleDisplayDrawer: () => {},
+  handleHideDrawer: () => {},
 };
 
 export const mapStateToProps = (state) => ({
@@ -180,4 +177,9 @@ export const mapStateToProps = (state) => ({
   displayDrawer: state.ui.get('isNotificationDrawerVisible'),
 });
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = (dispatch) => ({
+  handleDisplayDrawer: () => dispatch(displayNotificationDrawer()),
+  handleHideDrawer: () => dispatch(hideNotificationDrawer()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
