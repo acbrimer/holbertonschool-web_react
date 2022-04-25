@@ -47,7 +47,7 @@ const Header = (props) => {
 
 Header.propTypes = {
   isLoggedIn: PropTypes.bool,
-  user: PropTypes.object,
+  user: PropTypes.any,
   logOut: PropTypes.func,
 };
 

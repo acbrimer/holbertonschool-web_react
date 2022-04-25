@@ -7,16 +7,15 @@ import {
   HIDE_NOTIFICATION_DRAWER,
 } from './uiActionTypes';
 
-export const login = (email, password) => ({
+export const login = (data) => ({
   type: LOGIN,
-  user: { email, password },
+  user: data,
 });
 
 export const logout = () => ({ type: LOGOUT });
 
-export const loginSuccess = (data) => ({
+export const loginSuccess = () => ({
   type: LOGIN_SUCCESS,
-  data,
 });
 
 export const loginFailure = () => ({
@@ -32,9 +31,11 @@ export const hideNotificationDrawer = () => ({
 });
 
 export const loginRequest = (email, password) => async (dispatch) => {
-  dispatch(login(email, password));
   fetch('./login-success.json')
     .then((response) => response.json())
-    .then((data) => dispatch(loginSuccess(data)))
+    .then((data) => {
+      dispatch(loginSuccess());
+      dispatch(login(data));
+    })
     .catch(() => dispatch(loginFailure()));
 };

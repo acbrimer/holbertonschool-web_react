@@ -2,6 +2,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT,
+  LOGIN,
   DISPLAY_NOTIFICATION_DRAWER,
   HIDE_NOTIFICATION_DRAWER,
 } from '../actions/uiActionTypes';
@@ -16,13 +17,15 @@ export const initialState = Map({
 export default (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_SUCCESS:
-      return state.withMutations((s) =>
-        s.set('isUserLoggedIn', true).set('user', action.data)
-      );
+      return state.set('isUserLoggedIn', true);
     case LOGIN_FAILURE:
       return state.set('isUserLoggedIn', false);
+    case LOGIN:
+      return state.set('user', action.user);
     case LOGOUT:
-      return state.set('isUserLoggedIn', false);
+      return state.withMutations((s) =>
+        s.set('isUserLoggedIn', false).set('user', {})
+      );
     case DISPLAY_NOTIFICATION_DRAWER:
       return state.set('isNotificationDrawerVisible', true);
     case HIDE_NOTIFICATION_DRAWER:
