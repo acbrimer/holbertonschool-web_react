@@ -43,7 +43,8 @@ const Login = (props) => {
     setPassword(e.target.value);
   };
 
-  const handleLoginSubmit = () => {
+  const handleLoginSubmit = (e) => {
+    e.preventDefault();
     logIn(email, password);
   };
 

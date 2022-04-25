@@ -1,7 +1,9 @@
 import React from 'react';
 import logo from '../assets/holberton-logo.jpg';
 import { StyleSheet, css } from 'aphrodite';
-import AppContext from '../App/AppContext';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { logout } from '../actions/uiActionCreators';
 
 const styles = StyleSheet.create({
   appHeader: {
@@ -22,28 +24,46 @@ const styles = StyleSheet.create({
   },
 });
 
-function Header() {
+const Header = (props) => {
+  const { isLoggedIn, logOut, user } = props;
   return (
     <header className={css(styles.appHeader)}>
       <img src={logo} className={css(styles.appLogo)} alt="logo" />
       <h1 style={{ flexGrow: 1 }}>School dashboard</h1>
-      <AppContext.Consumer>
-        {({ user, logOut }) =>
-          user &&
-          user.isLoggedIn && (
-            <div id="logoutSection">
-              <p>
-                Welcome&nbsp;<b>{user.email}</b>&nbsp;
-                <a href="#" onClick={logOut}>
-                  (logout)
-                </a>
-              </p>
-            </div>
-          )
-        }
-      </AppContext.Consumer>
+
+      {isLoggedIn && (
+        <div id="logoutSection">
+          <p>
+            Welcome&nbsp;<b>{user.email}</b>&nbsp;
+            <a href="#" onClick={logOut}>
+              (logout)
+            </a>
+          </p>
+        </div>
+      )}
     </header>
   );
-}
+};
 
-export default Header;
+Header.propTypes = {
+  isLoggedIn: PropTypes.bool,
+  user: PropTypes.object,
+  logOut: PropTypes.func,
+};
+
+Header.defaultProps = {
+  isLoggedIn: false,
+  user: {},
+  logOut: () => {},
+};
+
+const mapStateToProps = (state) => ({
+  isLoggedIn: state.ui.get('isUserLoggedIn'),
+  user: state.ui.get('user'),
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  logOut: () => dispatch(logout()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

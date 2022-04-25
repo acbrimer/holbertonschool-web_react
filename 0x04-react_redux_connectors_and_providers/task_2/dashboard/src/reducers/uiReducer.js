@@ -16,7 +16,9 @@ export const initialState = Map({
 export default (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_SUCCESS:
-      return state.set('isUserLoggedIn', true);
+      return state.withMutations((s) =>
+        s.set('isUserLoggedIn', true).set('user', action.data)
+      );
     case LOGIN_FAILURE:
       return state.set('isUserLoggedIn', false);
     case LOGOUT:
