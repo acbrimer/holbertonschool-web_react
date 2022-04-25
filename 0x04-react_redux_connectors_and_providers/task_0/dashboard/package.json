@@ -12,6 +12,7 @@
     "test-watch": "jest --watch"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.8.1",
     "aphrodite": "^2.4.0",
     "clsx": "^1.1.1",
     "immutable": "^4.0.0",
