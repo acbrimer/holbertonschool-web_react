@@ -13,3 +13,8 @@
 - `src/App/App.js`:
   - Implement a provider passing the store that you created to the main App
 
+## 2. Test MapStateToProps
+- `src/App/App.js`:
+  - Export `mapStateToProps`
+- `src/App/App.test.js`
+  - Add new suite/test for `mapStateToProps`

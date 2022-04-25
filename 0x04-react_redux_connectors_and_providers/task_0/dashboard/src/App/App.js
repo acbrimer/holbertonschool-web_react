@@ -175,8 +175,8 @@ App.defaultProps = {
   displayDrawer: false,
 };
 
-const mapStateToProps = (state) => ({
-  isLoggedIn: state.ui.isLoggedIn,
+export const mapStateToProps = (state) => ({
+  isLoggedIn: state.ui.get('isUserLoggedIn'),
 });
 
 export default connect(mapStateToProps)(App);
